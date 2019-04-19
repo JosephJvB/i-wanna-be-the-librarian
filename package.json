@@ -6,6 +6,7 @@
   "dependencies": {
     "express": "^4.16.4",
     "formidable": "^1.2.1",
+    "gfycat-style-urls": "^1.0.3",
     "helmet": "^3.16.0"
   },
   "devDependencies": {

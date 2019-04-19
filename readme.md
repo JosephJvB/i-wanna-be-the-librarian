@@ -12,3 +12,6 @@
   - can download all files as backup
 
 Is vue in typescript hard? I can think of one way to find out my man.
+
+Todo:
+- scripts to reset meta.json and uploads folder on heroku

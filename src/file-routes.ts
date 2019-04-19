@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import * as util from 'util';
 import * as path from 'path';
 import * as formidableParser from 'formidable';
+import { generateCombination } from 'gfycat-style-urls';
 
 import FileData from './file-data';
 
@@ -14,10 +15,10 @@ const readMetaJson = ():Promise<FileData[]> => util.promisify(fs.readFile)(metaJ
   .then(buff => JSON.parse(buff.toString())); // buff.toString or typescript complains!
 const writeMetaJson = (data: FileData[]):Promise<void> => util.promisify(fs.writeFile)(metaJsonPath, JSON.stringify(data, null, 2));
 
-/*
+/***ROUTE***
   GET @ /api/files/meta
   returns: array<FileData>
- */
+*/
 fileRouter.get('/meta', async (req, res):Promise<void> => {
   try {
     const metaData: FileData[] = await readMetaJson();
@@ -27,18 +28,19 @@ fileRouter.get('/meta', async (req, res):Promise<void> => {
   }
 })
 
-/*
+/***ROUTE***
   POST @ /api/files/upload
   returns: array<FileData>
-
-  TODO: generate uuid, send uuid to client. Then find files by uuid - so can save files with same name..
- */
+*/
 fileRouter.post('/upload', async (req, res):Promise<void> => {
   try {
     const formParser = new formidableParser()
-    // rename file: https://github.com/felixge/node-formidable
+    // gen unique id:adj,adj,animal
+    const uniqueId:string = await generateUniqueId();
+    // rename filePath: https://github.com/felixge/node-formidable
     formParser.on('fileBegin', (name, file) => {
-      file.path = path.join(__dirname, '../uploads', file.name);
+      const ext:string = file.name.split('.').pop();
+      file.path = path.join(__dirname, '../uploads', uniqueId + '.' + ext);
     })
     formParser.parse(req, async (err, fields, file) => {
       if(err){
@@ -46,7 +48,7 @@ fileRouter.post('/upload', async (req, res):Promise<void> => {
         res.status(500).send(err)
         return;
       }
-      const fileData:FileData = file.data;
+      const fileData = new FileData(file.data, uniqueId);
       const meta:FileData[] = await readMetaJson();
       meta.push(fileData);
       await writeMetaJson(meta);
@@ -57,5 +59,16 @@ fileRouter.post('/upload', async (req, res):Promise<void> => {
     res.status(500).send(err)
   }
 })
+
+async function generateUniqueId():Promise<string> {
+  let id:string = generateCombination(2, '', true);
+  const metaJson = await util.promisify(fs.readFile)(path.join(__dirname, '../meta.json'))
+  const existingIds:string[] = JSON.parse(metaJson.toString())
+      .map(i => i.id);
+  while(existingIds.includes(id)) {
+    id = generateCombination(2, '', true);
+  }
+  return id;
+}
 
 export default fileRouter;

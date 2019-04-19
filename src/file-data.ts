@@ -7,11 +7,18 @@ interface IData {
   mtime: Date;
 }
 export default class FileData implements IData {
-  constructor(
-    public size: number,
-    public path: string,
-    public name: string,
-    public type: string,
-    public mtime: Date
-  ){};
+  public readonly id: string;
+  public size: number;
+  public path: string;
+  public name: string;
+  public type: string;
+  public mtime: Date;
+  constructor(data:IData, uniqueId:string){
+      this.id = uniqueId;
+      this.size = data.size;
+      this.path = data.path;
+      this.name = data.name;
+      this.type = data.type;
+      this.mtime = data.mtime;
+  }
 }
