@@ -29,18 +29,24 @@ loginRouter.get('/', (req, res, next) => {
 export function loginMiddleware(req, res, next):void {
   // error1
   if(!req.query.hash) {
-    next('No hash on file request, authorization failed');
+    const ERR:Error = new Error('No hash on file request, authorization failed');
+    res.status(400).send(ERR.message);
+    next(ERR);
     return;
   }
   // error2
   const matchHash:{hash:string, exp:Date} = validHashes.find(h => h.hash === req.query.hash);
   if(!matchHash) {
-    next('No valid hash found, authorization failed');
+    const ERR:Error = new Error('No valid hash found, authorization failed');
+    res.status(400).send(ERR.message);
+    next(ERR);
     return;
   }
   // error 3
   if(matchHash.exp.getTime() < Date.now()) {
-    next('Given hash is past its best-before, authorization failed');
+    const ERR:Error = new Error('Given hash is past its best-before, authorization failed');
+    res.status(400).send(ERR.message);
+    next(ERR);
     return;
   }
   // you're all good mate go thru
