@@ -3,13 +3,15 @@ import * as express from 'express';
 import {join} from 'path';
 
 import fileRoutes from './file-routes';
+import loginRoute, {loginMiddleware} from './login-route';
 
 const Server = express();
 // MIDDLEWARE
 Server.use(helmet());
 Server.use(express.static(join(__dirname, '../')))
 // route-middleware
-Server.use('/api/files/', fileRoutes);
+Server.use('/api/files/', loginMiddleware, fileRoutes);
+Server.use('/login', loginRoute)
 // final-middleware
 Server.use('*', (req, res) => res.sendFile(join(__dirname, '../index.html')))
 

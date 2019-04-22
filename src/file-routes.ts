@@ -34,18 +34,22 @@ fileRouter.get('/meta', async (req, res):Promise<void> => {
 */
 fileRouter.post('/upload', async (req, res):Promise<void> => {
   try {
-    const formParser = new formidableParser()
+    const formParser = new formidableParser();
     // gen unique id:adj,adj,animal
     const uniqueId:string = await generateUniqueId();
     // rename filePath: https://github.com/felixge/node-formidable
     formParser.on('fileBegin', (name, file) => {
       const ext:string = file.name.split('.').pop();
       file.path = path.join(__dirname, '../uploads', uniqueId + '.' + ext);
-    })
+    });
     formParser.parse(req, async (err, fields, file) => {
       if(err){
         console.log(err);
         res.status(500).send(err)
+        return;
+      }
+      if(!file.data) {
+        res.status(400).send("Bad Request, no file data present");
         return;
       }
       const fileData = new FileData(file.data, uniqueId);
