@@ -8,12 +8,12 @@ import loginRoute, {loginMiddleware} from './login-route';
 const Server = express();
 // MIDDLEWARE
 Server.use(helmet());
-Server.use(express.static(join(__dirname, '../')))
+Server.use(express.static(join(__dirname, '../dist-client')))
 // route-middleware
 Server.use('/api/files/', loginMiddleware, fileRoutes);
 Server.use('/login', loginRoute)
 // final-middleware
-Server.use('*', (req, res) => res.sendFile(join(__dirname, '../index.html')))
+Server.use('*', (req, res) => res.sendFile(join(__dirname, '../dist-client/index.html')))
 
 // dunno some boilerplate error middleware.
 Server.use((err, req, res, next) => {
@@ -31,7 +31,7 @@ Server.use((err, req, res, next) => {
 
 // Start Server and classic error handler
 // process.env.PORT complains about being a string if it's undefined so parseInt it is..
-const port:number = parseInt(process.env.PORT) ||  3000;
+const port = process.env.PORT ||  3000;
 const liveServer = Server.listen(port, () => console.log('Server up on port:', port));
 
 process.on('uncaughtException', (err) => {

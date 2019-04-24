@@ -1,6 +1,8 @@
 node_modules
-dist
+dist-*
 .vscode
 DS_Store
 uploads/*
 !uploads/.gitkeep 
+.awcache
+bundle.js

@@ -4,11 +4,17 @@
   "description": "- TS express backend   - save uploaded files to file-system - use JS framework frontend. Prob vue   - see all uploaded files   - filter/search uploaded files   - can download single-files to computer   - can download all files as backup",
   "main": "index.js",
   "dependencies": {
+    "awesome-typescript-loader": "^5.2.1",
     "express": "^4.16.4",
     "formidable": "^1.2.1",
     "gfycat-style-urls": "^1.0.3",
     "helmet": "^3.16.0",
-    "uuid": "^3.3.2"
+    "html-webpack-plugin": "^3.2.0",
+    "uuid": "^3.3.2",
+    "vue": "^2.6.10",
+    "vue-loader": "^15.7.0",
+    "vue-router": "^3.0.6",
+    "webpack": "^4.30.0"
   },
   "devDependencies": {
     "@types/express": "^4.16.1",
@@ -16,12 +22,14 @@
     "@types/node": "^11.13.5",
     "nodemon": "^1.18.11",
     "ts-node": "^8.1.0",
-    "typescript": "^3.4.3"
+    "typescript": "^3.4.3",
+    "webpack-cli": "^3.3.1"
   },
   "scripts": {
-    "dev": "nodemon",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "nodemon & webpack --watch",
+    "build": "tsc & webpack",
+    "start": "node dist-server/index.js",
+    "webpack": "webpack"
   },
   "keywords": [],
   "author": "",

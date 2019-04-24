@@ -35,7 +35,7 @@ export function loginMiddleware(req, res, next):void {
     return;
   }
   // error2
-  const matchHash:{hash:string, exp:Date} = validHashes.find(h => h.hash === req.query.hash);
+  const matchHash = validHashes.find(h => h.hash === req.query.hash);
   if(!matchHash) {
     const ERR:Error = new Error('No valid hash found, authorization failed');
     res.status(400).send(ERR.message);

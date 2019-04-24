@@ -1,18 +1,24 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "es2015",
+    "moduleResolution": "node",
     "strict": true,
     "noImplicitAny": false,
     "removeComments": true,
     "preserveConstEnums": true,
-    "outDir": "dist-server",
+    "outDir": "dist-client",
     "noEmitOnError": true
   },
   "include": [
-    "./server",
+    "./client",
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "awesomeTypescriptLoaderOptions": {
+    // "useBabel": true,
+    "useCache": true
+}
 }

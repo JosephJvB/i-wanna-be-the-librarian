@@ -21,3 +21,6 @@ Todo:
   - I take the hash from the console and enter it in the front end..
   - If it matches the hash then I can go do stuff..
   - TODOS: expiry and shit like that. Done.
+- [] I wanna build a front end in typescript.
+  - Do I use react for hooks? Or vue cos I have a soft spot for vue
+  - gonna use vue: vue vue-loader vue-router, might need vue-template-compiler

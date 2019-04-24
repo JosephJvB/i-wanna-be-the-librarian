@@ -10,7 +10,7 @@ import FileData from './file-data';
 const fileRouter = Router();
 
 // get meta.json util
-const metaJsonPath:string = path.join(__dirname, '../meta.json');
+const metaJsonPath:string = path.join(__dirname, '../../meta.json');
 const readMetaJson = ():Promise<FileData[]> => util.promisify(fs.readFile)(metaJsonPath)
   .then(buff => JSON.parse(buff.toString())); // buff.toString or typescript complains!
 const writeMetaJson = (data: FileData[]):Promise<void> => util.promisify(fs.writeFile)(metaJsonPath, JSON.stringify(data, null, 2));
@@ -40,7 +40,7 @@ fileRouter.post('/upload', async (req, res):Promise<void> => {
     // rename filePath: https://github.com/felixge/node-formidable
     formParser.on('fileBegin', (name, file) => {
       const ext:string = file.name.split('.').pop();
-      file.path = path.join(__dirname, '../uploads', uniqueId + '.' + ext);
+      file.path = path.join(__dirname, '../../uploads', uniqueId + '.' + ext);
     });
     formParser.parse(req, async (err, fields, file) => {
       if(err){
@@ -66,7 +66,7 @@ fileRouter.post('/upload', async (req, res):Promise<void> => {
 
 async function generateUniqueId():Promise<string> {
   let id:string = generateCombination(2, '', true);
-  const metaJson = await util.promisify(fs.readFile)(path.join(__dirname, '../meta.json'))
+  const metaJson = await util.promisify(fs.readFile)(path.join(__dirname, '../../meta.json'))
   const existingIds:string[] = JSON.parse(metaJson.toString())
       .map(i => i.id);
   while(existingIds.includes(id)) {
