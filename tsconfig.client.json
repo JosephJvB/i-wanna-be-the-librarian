@@ -12,13 +12,10 @@
     "noEmitOnError": true
   },
   "include": [
-    "./client",
+    "./client/**/*.vue",
+    "./client/**/*.ts",
   ],
   "exclude": [
     "node_modules"
   ],
-  "awesomeTypescriptLoaderOptions": {
-    // "useBabel": true,
-    "useCache": true
-}
 }

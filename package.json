@@ -4,16 +4,18 @@
   "description": "- TS express backend   - save uploaded files to file-system - use JS framework frontend. Prob vue   - see all uploaded files   - filter/search uploaded files   - can download single-files to computer   - can download all files as backup",
   "main": "index.js",
   "dependencies": {
-    "awesome-typescript-loader": "^5.2.1",
+    "axios": "^0.18.0",
     "express": "^4.16.4",
     "formidable": "^1.2.1",
     "gfycat-style-urls": "^1.0.3",
     "helmet": "^3.16.0",
     "html-webpack-plugin": "^3.2.0",
+    "ts-loader": "^5.4.3",
     "uuid": "^3.3.2",
     "vue": "^2.6.10",
     "vue-loader": "^15.7.0",
     "vue-router": "^3.0.6",
+    "vue-template-compiler": "^2.6.10",
     "webpack": "^4.30.0"
   },
   "devDependencies": {

@@ -30,22 +30,26 @@ module.exports = {
           'css-loader'
         ]
       },
-      // gimme vue
       {
         test: /\.vue$/,
         loader: 'vue-loader'
       },
       {
-        test: /\.ts?$/, // all ts files handled by ts loader
+        test: /\.ts$/,
         exclude: /node_modules/,
-        use: [
-            {
-                loader: "awesome-typescript-loader",
-                options: { configFileName: "tsconfig.client.json" }
-            },
-        ]
-      }
+        loader: "ts-loader",
+        options: {
+          configFile: "tsconfig.client.json",
+          appendTsSuffixTo: [/\.vue$/]
+        }
+      },
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.js', '.vue', '.json'],
+  //   alias: {
+  //     'vue$': 'vue/dist/vue.esm.js'
+  //   }
   },
   plugins: [
     new VueLoaderPlugin(),
