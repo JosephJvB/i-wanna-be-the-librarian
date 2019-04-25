@@ -1,26 +1,24 @@
 # I wanna be the librarian
 
-- TS express backend
-  - save uploaded files to file-system
-  - serve uploaded file meta-information: filename/extension/size?
-  - save files to dist/temp so client can read/download the files
-  - clear dist/temp on success or failure
-- use JS framework frontend. Prob vue
-  - see all uploaded files
-  - filter/search uploaded files
-  - can download single-files to computer
-  - can download all files as backup
+Some sort of web file-storage.
+
+Using as a chance to try on Typescript & file uploading
+
+!!!make sure to move webpack + loaders into dev dependencies kids!
+
+Before
+
+![](http://snappyimages.nextwavesrl.netdna-cdn.com/img/914bdb9411d4e6966ff860d9c2fdff0b.png)
+
+After
+
+![](http://snappyimages.nextwavesrl.netdna-cdn.com/img/794b0ac7436b4ab9d373ed713e60c00c.png)
 
 Is vue in typescript hard? I can think of one way to find out my man.
 
-Todo:
-- [x]scripts to reset meta.json and uploads folder on heroku
-- [x] I wanna make some super dumb and unique auth system and here's how it's gonna work
-  - button on main page: "go-go-gadget auth"
-  - logs a hash to the heroku console. NEVER sends it back to the client.
-  - I take the hash from the console and enter it in the front end..
-  - If it matches the hash then I can go do stuff..
-  - TODOS: expiry and shit like that. Done.
-- [] I wanna build a front end in typescript.
-  - Do I use react for hooks? Or vue cos I have a soft spot for vue
-  - gonna use vue: vue vue-loader vue-router, might need vue-template-compiler
+**Update**: yeah it's kinda tricky there are definitely a few gotchas.
+- Thanks JohnPapa: https://johnpapa.net/vue-typescript/. PapaBless
+- cant use `appendTsSuffixTo` with webpack: awesome-typescript-loader
+- Vue shim was not behaving nicely at all
+- few times already Ive had to use :any annotations to avoid editor errors from Vetur and TS. Which defeats the purpose..
+
