@@ -2,7 +2,7 @@
   <div>
     <label>supergreat file uploader</label>
     <input id="file-input" @change="handleInputFile" type="file">
-    <button>upload</button>
+    <button @click="uploadFile">upload</button>
   </div>
 </template>
 
@@ -22,16 +22,13 @@ export default Vue.extend({
       // always take last uploaded file
       this.fileToUpload = e.target.files[e.target.files.length - 1];
     },
-    uploadFile():Promise<void> {
+    async uploadFile():Promise<void> {
       const postFileData = new FormData();
       postFileData.append('data', this.fileToUpload)
 
-      return axios.post('/api/files/upload', postFileData)
-        .then(res => {
-          console.log(res);
-          this.resultData = res.data;
-        })
-        .catch(console.error)
+      const resp = await axios.post('/api/files/upload', postFileData);
+      console.log(resp.data);
+      this.resultData = resp.data;
     }
   }
 })

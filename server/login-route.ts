@@ -28,28 +28,36 @@ loginRouter.get('/', (req, res, next) => {
 
 export function loginMiddleware(req, res, next):void {
   // error1
-  if(!req.query.hash) {
-    const ERR:Error = new Error('No hash on file request, authorization failed');
-    res.status(400).send(ERR.message);
-    next(ERR);
-    return;
+  if(process.env.NODE_ENV) {
+    if(!req.query.hash) {
+      const ERR:Error = new Error('No hash on file request, authorization failed');
+      res.status(400).send(ERR.message);
+      next(ERR);
+      return;
+    }
+    // error2
+    const matchHash = validHashes.find(h => h.hash === req.query.hash);
+    if(!matchHash) {
+      const ERR:Error = new Error('No valid hash found, authorization failed');
+      res.status(400).send(ERR.message);
+      next(ERR);
+      return;
+    }
+    // error 3
+    if(matchHash.exp.getTime() < Date.now()) {
+      const ERR:Error = new Error('Given hash is past its best-before, authorization failed');
+      res.status(400).send(ERR.message);
+      next(ERR);
+      return;
+    }
+    // you're all good mate go thru
+  } else {
+    console.log(`
+      No NODE_ENV set\n
+      hash middleware checks skipped
+      ---
+    `)
   }
-  // error2
-  const matchHash = validHashes.find(h => h.hash === req.query.hash);
-  if(!matchHash) {
-    const ERR:Error = new Error('No valid hash found, authorization failed');
-    res.status(400).send(ERR.message);
-    next(ERR);
-    return;
-  }
-  // error 3
-  if(matchHash.exp.getTime() < Date.now()) {
-    const ERR:Error = new Error('Given hash is past its best-before, authorization failed');
-    res.status(400).send(ERR.message);
-    next(ERR);
-    return;
-  }
-  // you're all good mate go thru
   next();
 };
 

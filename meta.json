@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "EfficientNeatDuck",
+    "size": 3820737,
+    "path": "/Users/josephvanbohemen/Workspace/TS/i-wanna-be-the-librarian/uploads/EfficientNeatDuck.jpg",
+    "name": "timeric.jpg",
+    "type": "image/jpeg"
+  },
+  {
+    "id": "DecisiveBroadHornet",
+    "size": 73711,
+    "path": "/Users/josephvanbohemen/Workspace/TS/i-wanna-be-the-librarian/uploads/DecisiveBroadHornet.jpg",
+    "name": "trtr.jpg",
+    "type": "image/jpeg"
+  },
+  {
+    "id": "HilariousJudiciousShark",
+    "size": 92350,
+    "path": "/Users/josephvanbohemen/Workspace/TS/i-wanna-be-the-librarian/uploads/HilariousJudiciousShark.jpg",
+    "name": "spicyboys.jpg",
+    "type": "image/jpeg"
+  }
+]
