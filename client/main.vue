@@ -1,8 +1,15 @@
 <template>
-  <div>
-    <label>supergreat file uploader</label>
-    <input id="file-input" @change="handleInputFile" type="file">
-    <button @click="uploadFile">upload</button>
+  <div class="app-container">
+    <header>
+      <h1>Joe's library</h1>
+    </header>
+    <main>
+      <label>supergreat file uploader</label>
+      <button @click="browseFiles">Choose file</button>
+      <p>{{fileToUpload || 'no file selected'}}</p>
+      <input ref="fileInput" @change="handleInputFile" type="file">
+      <button @click="uploadFile">Upload</button>
+    </main>
   </div>
 </template>
 
@@ -18,9 +25,16 @@ export default Vue.extend({
     }
   },
   methods: {
+    //https://stackoverflow.com/questions/52109471/typescript-in-vue-property-validate-does-not-exist-on-type-vue-element
+    // trigger hidden file input element from another click event
+    browseFiles():void {
+      const fileRef:any = this.$refs.fileInput;
+      fileRef.click();
+    },
     handleInputFile(e:any) {
       // always take last uploaded file
-      this.fileToUpload = e.target.files[e.target.files.length - 1];
+      const nextFile: File = e.target.files[e.target.files.length - 1];
+      this.fileToUpload = nextFile.name;
     },
     async uploadFile():Promise<void> {
       const postFileData = new FormData();
@@ -35,5 +49,12 @@ export default Vue.extend({
 </script>
 
 <style>
-
+  .app-container {
+    background-color: red;
+    min-width: 100%;
+    min-height: 100%;
+  }
+  input[type=file] {
+    display: none;
+  }
 </style>
