@@ -9,7 +9,6 @@
     "formidable": "^1.2.1",
     "gfycat-style-urls": "^1.0.3",
     "helmet": "^3.16.0",
-    "uuid": "^3.3.2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6"
   },
