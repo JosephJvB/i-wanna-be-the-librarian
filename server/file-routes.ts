@@ -76,3 +76,18 @@ async function generateUniqueId():Promise<string> {
 }
 
 export default fileRouter;
+
+// Auth determined by env-var.
+// only I can enable / disable these routes.
+// issue: if I forget to disable routes.
+// one solution: some way so I can only enable them for 5mins at a time. Or something like that.
+export const envProtection = (req, res, next) => {
+  const LOCKED:boolean = process.env.FILE_ROUTE_STATUS === 'LOCKED'
+  if(LOCKED) {
+    const ERR:Error = new Error('File routes are disabled');
+    res.status(400).send(ERR.message)
+    next(ERR);
+  } else {
+    next();
+  }
+}

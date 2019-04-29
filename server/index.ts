@@ -2,16 +2,14 @@ import * as helmet from 'helmet';
 import * as express from 'express';
 import {join} from 'path';
 
-import fileRoutes from './file-routes';
-import loginRoute, {loginMiddleware} from './login-route';
+import fileRoutes, {envProtection} from './file-routes';
 
 const Server = express();
 // MIDDLEWARE
 Server.use(helmet());
 Server.use(express.static(join(__dirname, '../dist-client')))
 // route-middleware
-Server.use('/api/files/', loginMiddleware, fileRoutes);
-Server.use('/login', loginRoute)
+Server.use('/api/files/', envProtection, fileRoutes);
 // final-middleware
 Server.use('*', (req, res) => res.sendFile(join(__dirname, '../dist-client/index.html')))
 
